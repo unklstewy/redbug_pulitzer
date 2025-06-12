@@ -11,6 +11,7 @@ import (
     "strings"
     "time"
 
+    "github.com/unklstewy/redbug_sadist/pkg/protocol"
 )
 
 // Mode determines which color scheme and labels to use
@@ -52,7 +53,7 @@ func GetStyleConfig(mode Mode) StyleConfig {
         BorderColor:    "#e74c3c",
     }
 }
-func GenerateAPIDocHTML(apiDocs []CommandAPI, filename string, mode Mode, vendor string, model string) {
+func GenerateAPIDocHTML(apiDocs []protocol.CommandAPI, filename string, mode Mode, vendor string, model string) {
 	// Get styling configuration based on mode
 	style := GetStyleConfig(mode)
 
@@ -441,7 +442,7 @@ func GenerateAPIDocHTML(apiDocs []CommandAPI, filename string, mode Mode, vendor
 
 	// Prepare template data
 	data := struct {
-		ApiDocs     []CommandAPI
+		ApiDocs     []protocol.CommandAPI
 		Style       StyleConfig
 		GeneratedAt string
 	}{
@@ -491,8 +492,8 @@ func GenerateAPIDocHTML(apiDocs []CommandAPI, filename string, mode Mode, vendor
 // }
 
 // findReports searches for all report files in common locations
-func findReports() []ReportInfo {
-	var reports []ReportInfo
+func findReports() []protocol.ReportInfo {
+	var reports []protocol.ReportInfo
 
 	// New approach: recursively walk through the reports directory
 	reportsDir := "reports"
@@ -509,7 +510,7 @@ func findReports() []ReportInfo {
 
 		// Only include HTML files
 		if strings.HasSuffix(path, ".html") {
-			reports = append(reports, ReportInfo{
+			reports = append(reports, protocol.ReportInfo{
 				Path:    path,
 				Size:    info.Size(),
 				ModTime: info.ModTime(),
