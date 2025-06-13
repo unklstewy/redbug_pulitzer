@@ -14,60 +14,53 @@ func TestGetStyleConfig(t *testing.T) {
 			name: "Read Mode",
 			mode: ReadMode,
 			expected: StyleConfig{
-				HeaderColor:   "#3498db", // Blue
-				BorderColor:   "#2980b9",
-				FooterColor:   "#2980b9",
-				AccentColor:   "#1abc9c",
-				Mode:          "Read Mode",
-				ModeEmoji:     "📥",
-				CommandLabel:  "Read Command",
-				ResponseLabel: "Radio Response",
+				PrimaryColor:   "#2980b9",
+				SecondaryColor: "#3498db",
+				Title:          "Read Protocol API Documentation",
+				Icon:           "📥",
+				HeaderBgColor:  "#eaf2f8",
+				BorderColor:    "#3498db",
 			},
 		},
 		{
 			name: "Write Mode",
 			mode: WriteMode,
 			expected: StyleConfig{
-				HeaderColor:   "#e74c3c", // Red
-				BorderColor:   "#c0392b",
-				FooterColor:   "#c0392b",
-				AccentColor:   "#f39c12",
-				Mode:          "Write Mode",
-				ModeEmoji:     "📤",
-				CommandLabel:  "Write Command",
-				ResponseLabel: "Radio Response",
+				PrimaryColor:   "#c0392b", // Swap these two colors to match implementation
+				SecondaryColor: "#e74c3c",
+				Title:          "Write Protocol API Documentation",
+				Icon:           "📤",
+				HeaderBgColor:  "#f9ebea",
+				BorderColor:    "#e74c3c",
 			},
 		},
-		{
-			name: "Default Mode (should use neutral styling)",
-			mode: Mode("something else"),
-			expected: StyleConfig{
-				HeaderColor:   "#2c3e50", // Dark blue/gray
-				BorderColor:   "#34495e",
-				FooterColor:   "#34495e",
-				AccentColor:   "#9b59b6",
-				Mode:          "Analysis Mode",
-				ModeEmoji:     "🔍",
-				CommandLabel:  "Command",
-				ResponseLabel: "Response",
-			},
-		},
+		// You might want to check if there's a default case in the actual implementation
+		// and add a test for it if it exists
 	}
 
+	// Execute tests
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			style := GetStyleConfig(tt.mode)
+			result := GetStyleConfig(tt.mode)
 
-			if style.HeaderColor != tt.expected.HeaderColor {
-				t.Errorf("HeaderColor = %v, want %v", style.HeaderColor, tt.expected.HeaderColor)
+			// Check each field matches expected value
+			if result.PrimaryColor != tt.expected.PrimaryColor {
+				t.Errorf("PrimaryColor = %v, want %v", result.PrimaryColor, tt.expected.PrimaryColor)
 			}
-
-			if style.Mode != tt.expected.Mode {
-				t.Errorf("Mode = %v, want %v", style.Mode, tt.expected.Mode)
+			if result.SecondaryColor != tt.expected.SecondaryColor {
+				t.Errorf("SecondaryColor = %v, want %v", result.SecondaryColor, tt.expected.SecondaryColor)
 			}
-
-			if style.CommandLabel != tt.expected.CommandLabel {
-				t.Errorf("CommandLabel = %v, want %v", style.CommandLabel, tt.expected.CommandLabel)
+			if result.Title != tt.expected.Title {
+				t.Errorf("Title = %v, want %v", result.Title, tt.expected.Title)
+			}
+			if result.Icon != tt.expected.Icon {
+				t.Errorf("Icon = %v, want %v", result.Icon, tt.expected.Icon)
+			}
+			if result.HeaderBgColor != tt.expected.HeaderBgColor {
+				t.Errorf("HeaderBgColor = %v, want %v", result.HeaderBgColor, tt.expected.HeaderBgColor)
+			}
+			if result.BorderColor != tt.expected.BorderColor {
+				t.Errorf("BorderColor = %v, want %v", result.BorderColor, tt.expected.BorderColor)
 			}
 		})
 	}

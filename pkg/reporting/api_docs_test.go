@@ -110,6 +110,18 @@ func TestGenerateAPIDocHTML(t *testing.T) {
 			if !strings.Contains(contentStr, modeStr) {
 				t.Errorf("Expected generated HTML to contain '%s', but it doesn't", modeStr)
 			}
+
+			// Look for this code and make sure template data includes these values
+			// Add vendor and model to template data if not already there:
+			data := map[string]interface{}{
+				"Vendor": "baofeng",
+				"Model":  "dm32uv",
+				"Mode":   modeStr,
+			}
+
+			// Example of what might need to be in the template
+			// <title>{{.Vendor}} {{.Model}} - {{.Mode}}</title>
+			// <h1>{{.Vendor | title}} {{.Model | upper}} - {{.Mode}}</h1>
 		})
 	}
 }

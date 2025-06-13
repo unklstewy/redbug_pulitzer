@@ -56,7 +56,7 @@ func TestGetReportPath(t *testing.T) {
 			model:      "dm32uv",
 			reportType: ReportTypeReadAPI,
 			fileName:   "dm32uv_read_api_docs.html",
-			expected:   filepath.Join("reports", "api", "baofeng", "dm32uv", "dm32uv_read_api_docs.html"),
+			expected:   filepath.Join("reports", "protocol", "read", "baofeng", "dm32uv", "dm32uv_read_api_docs.html"),
 		},
 		{
 			name:       "Codeplug analysis",
